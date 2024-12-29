@@ -1,0 +1,21 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
+    "eslint.options": {
+        "extensions": [
+            ".html",
+            ".js",
+            ".ts"
+        ]
+    },
+    "eslint.validate": [
+        "javascript",
+        "html",
+        "typescript"
+    ],
+    "files.eol": "auto",
+    "git.detectSubmodulesLimit": 30,
+    "scm.showHistoryGraph": false
+}

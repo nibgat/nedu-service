@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  rethinkdb:
+    image: "rethinkdb:latest"
+    ports:
+      - "8080:8080"
+      - "28015:28015"
+      - "29015:29015" 
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+
+  authentication:
+    build: ./authentication-service/
+    ports:
+      - "3001:3000"
+    depends_on:
+      - rabbitmq
+
+  account:
+    build: ./account-service/
+    ports:
+      - "3002:3000"
+    depends_on:
+      - rabbitmq
+
+  api-gateway:
+    build: ./api-gateway/
+    ports:
+      - "3003:3000"
+    depends_on:
+      - rabbitmq
