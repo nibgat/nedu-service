@@ -10,12 +10,9 @@ This project is a microservice-based architecture built with NestJS. Each servic
 ## How to Run
 
 ### Initial Setup
-1. Pull all necessary images by running:
-   ```bash
-   docker-compose pull
-   ```
-
-2. Build and start the project:
+1. Add .env file to all services and define necessary database address, ports and RabbitMQ queues in this file.
+2. Remove the "#" character from the lines in the docker-compose.yml file
+3. Build and start the project:
    ```bash
    docker-compose up --build
    ```
@@ -30,6 +27,18 @@ This project is a microservice-based architecture built with NestJS. Each servic
   ```bash
   docker-compose up
   ```
+
+### Initial Setup For Development
+1. Build and start RabbitMQ and RethinkDB:
+   ```bash
+   docker-compose up --build
+   ```
+2. Add .env file to all services and define necessary database address, ports and RabbitMQ queues in this file.
+3. Run the services you need in develop mode on different terminals.
+   ```bash
+   yarn start:dev
+   ```
+
 
 ## Notes
 - Ensure all required environment variables are correctly set before starting the services.
