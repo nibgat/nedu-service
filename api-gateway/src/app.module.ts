@@ -8,12 +8,16 @@ import {
     AppService
 } from "./app.service";
 import {
+    AuthenticationModule
+} from "./authentication/authentication.module";
+import {
     AccountModule
 } from "./account/account.module";
 
 @Module({
     imports: [
-        AccountModule
+        AuthenticationModule,
+        AccountModule,
     ],
     controllers: [
         AppController
