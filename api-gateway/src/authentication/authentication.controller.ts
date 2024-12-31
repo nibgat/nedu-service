@@ -28,7 +28,6 @@ export class AuthenticationController {
     })
     @Post("register")
     async test(@Body() body: RegisterDTO) {
-        console.log("gönderildi");
         return await this.authenticationService.register(body);
     }
 }

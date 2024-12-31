@@ -20,7 +20,6 @@ export class AuthenticationController {
 
     @MessagePattern("register")
     async register(args: RegisterDTO) {
-        console.log("yakalandı")
         return await this.authenticationService.register(args);
     }
 
