@@ -1,10 +1,11 @@
 import {
-    IsStrongPassword,
-    IsPhoneNumber,
+    IsMobilePhone,
     IsDefined,
     IsString,
+    Matches,
     IsEmail,
     Length,
+    IsHash
 } from "class-validator";
 
 export class RegisterDTO {
@@ -18,11 +19,15 @@ export class RegisterDTO {
     @IsDefined()
     fullName: string;
 
-    @IsPhoneNumber("TR")
+    @IsMobilePhone()
+    @Matches(/^[0-9]*$/, {
+        message: "only-number"
+    })
+    @IsDefined()
     phone: string
 
-    @IsString()
     @IsDefined()
+    @IsString()
+    @IsHash("md5")
     password: string
-
 }
