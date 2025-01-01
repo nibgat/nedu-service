@@ -11,14 +11,20 @@ import {
     ApiTags
 } from "@nestjs/swagger";
 import {
-    RegisterDTO
-} from "./dto/request/register.dto";
+    SuccessRefreshTokenResponseDTO
+} from "./dto/response/success.refresh.token.response.dto";
 import {
     SuccessRegisterResponsDTO
 } from "./dto/response/succes.register.response.dto";
 import {
     SuccessLoginResponsDTO
 } from "./dto/response/success.login.response.dto";
+import {
+    RefreshTokenDTO
+} from "./dto/request/refresh.token.dto";
+import {
+    RegisterDTO
+} from "./dto/request/register.dto";
 import {
     LoginDTO
 } from "./dto/request/login.dto";
@@ -45,5 +51,14 @@ export class AuthenticationController {
     @Post("login")
     async login(@Body() body: LoginDTO) {
         return await this.authenticationService.login(body);
+    }
+
+    @ApiTags("Authentication")
+    @ApiOkResponse({
+        type: SuccessRefreshTokenResponseDTO
+    })
+    @Post("refreshToken")
+    async refreshToken(@Body() body: RefreshTokenDTO) {
+        return this.authenticationService.refreshToken(body);
     }
 }

@@ -13,10 +13,12 @@ import {
 import {
     JwtService
 } from "@nestjs/jwt";
+import Redis from "ioredis";
 
 const login = async (args: LoginDTO, services: {
-    jwtService: JwtService,
-    r: typeof rethinkdb
+    jwtService: JwtService;
+    cacheManager: Redis;
+    r: typeof rethinkdb;
 }) => {
     const _user = await services.r
         .db("nedu")
@@ -65,6 +67,9 @@ const login = async (args: LoginDTO, services: {
     });
 
     let userRefreshToken = user.refreshToken ? user.refreshToken : refreshToken;
+
+    await services.cacheManager.set(`${user.id.toString()}-${accessTokenID}`, accessToken, "EX", 14400);
+
 
     await services.r
         .db("nedu")

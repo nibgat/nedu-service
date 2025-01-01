@@ -6,6 +6,9 @@ import {
     ClientProxy
 } from "@nestjs/microservices";
 import {
+    RefreshTokenDTO
+} from "./dto/request/refresh.token.dto";
+import {
     RegisterDTO
 } from "./dto/request/register.dto";
 import {
@@ -27,6 +30,12 @@ export class AuthenticationService {
 
     async login(args: LoginDTO) {
         return this.authenticationService.send("login", {
+            ...args
+        });
+    }
+
+    async refreshToken(args: RefreshTokenDTO) {
+        return this.authenticationService.send("refreshToken", {
             ...args
         });
     }

@@ -32,7 +32,6 @@
     "crypto": "1.0.1",
     "dotenv": "16.4.5",
     "ioredis": "5.4.2",
-    "jsonwebtoken": "9.0.2",
     "reflect-metadata": "0.2.0",
     "rethinkdbdash": "2.3.31",
     "rxjs": "7.8.1"
