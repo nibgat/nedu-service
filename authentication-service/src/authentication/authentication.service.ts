@@ -18,14 +18,16 @@ import {
 import {
     JwtService
 } from "@nestjs/jwt";
+import Redis from "ioredis";
 
 @Injectable()
 export class AuthenticationService {
     constructor(
         @Inject("RETHINKDB_CONNECTION")
         private r: typeof rethinkdb,
-
         private jwtService: JwtService,
+        @Inject("CACHE_SERVICE")
+        private redis: Redis
     ) { }
 
     async register(args: RegisterDTO) {

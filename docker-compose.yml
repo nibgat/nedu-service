@@ -16,6 +16,10 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
 #  authentication:
 #    build: ./authentication-service/

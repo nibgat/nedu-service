@@ -13,6 +13,7 @@ import {
 import {
     JwtModule
 } from "@nestjs/jwt";
+import cacheProvider from "./cache/cache.provider";
 
 @Module({
     imports: [
@@ -28,10 +29,12 @@ import {
     ],
     providers: [
         AuthenticationService,
-        ...databaseProviders
+        ...databaseProviders,
+        cacheProvider
     ],
     exports: [
-        ...databaseProviders
+        ...databaseProviders,
+        cacheProvider
     ]
 })
 export class AuthenticationModule { }
