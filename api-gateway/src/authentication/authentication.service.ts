@@ -8,6 +8,9 @@ import {
 import {
     RegisterDTO
 } from "./dto/request/register.dto";
+import {
+    LoginDTO
+} from "./dto/request/login.dto";
 
 @Injectable()
 export class AuthenticationService {
@@ -18,6 +21,12 @@ export class AuthenticationService {
 
     async register(args: RegisterDTO) {
         return this.authenticationService.send("register", {
+            ...args
+        });
+    }
+
+    async login(args: LoginDTO) {
+        return this.authenticationService.send("login", {
             ...args
         });
     }

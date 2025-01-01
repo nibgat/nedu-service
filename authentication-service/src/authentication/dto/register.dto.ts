@@ -26,8 +26,8 @@ export class RegisterDTO {
     @IsDefined()
     phone: string
 
-    @IsDefined()
-    @IsString()
     @IsHash("md5")
+    @IsString()
+    @IsDefined()
     password: string
 }

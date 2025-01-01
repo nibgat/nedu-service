@@ -12,6 +12,7 @@ RMQ_ADDRESS = amqp://user:password@localhost:5672
 AUTHENTICATION_SERVICE_RMQ_QUEUE = authentication_service_queue_XXX
 RETHINKDB_ADDRESS = localhost
 RETHINKDB_PORT = 28015
+JWT_SECRET_KEY=XXX
 
 PORT = 3005
 

@@ -9,18 +9,34 @@ import {
     RegisterDTO
 } from "./dto/register.dto";
 import {
-    register
+    LoginDTO
+} from "./dto/login.dto";
+import {
+    register,
+    login
 } from "./actions";
+import {
+    JwtService
+} from "@nestjs/jwt";
 
 @Injectable()
 export class AuthenticationService {
     constructor(
         @Inject("RETHINKDB_CONNECTION")
         private r: typeof rethinkdb,
+
+        private jwtService: JwtService,
     ) { }
 
     async register(args: RegisterDTO) {
         return await register(args, {
+            r: this.r
+        });
+    }
+
+    async login(args: LoginDTO) {
+        return await login(args, {
+            jwtService: this.jwtService,
             r: this.r
         });
     }
