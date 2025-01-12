@@ -13,3 +13,7 @@ export {
 export {
     default as refreshToken
 } from "./refreshToken";
+
+export {
+    default as logout
+} from "./logout";

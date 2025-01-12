@@ -22,17 +22,14 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
 }) => {
     let validatedToken;
 
-    const _user = await services.r
+    const user = await services.r
         .db("nedu")
         .table("users")
-        .filter(
-            services.r
-                .row('refreshToken')
-                .eq(args.token)
-        )
+        .filter({
+            refreshToken: args.token
+        })
+        .nth(0)
         .run();
-
-    const user = _user[0]
 
     if (!user) {
         return {
@@ -54,8 +51,6 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
         };
     }
 
-    console.log(validatedToken)
-
     if (!validatedToken || !validatedToken.userID) {
         return {
             isError: true,
@@ -64,7 +59,7 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
         };
     }
 
-    if (validatedToken.userID !== user.id.toString()) {
+    if (validatedToken.userID !== user.id) {
         return {
             isError: true,
             message: "user-not-found",
@@ -84,13 +79,13 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
         expiresIn: "4h"
     });
 
-    await services.cacheManager.del(`${user._id.toString()}-${validatedToken.tokenID}`);
-    await services.cacheManager.set(`${user._id.toString()}-${accessTokenID}`, accessToken, "EX", 14400);
+    await services.cacheManager.del(`${user.id}-${validatedToken.tokenID}`);
+    await services.cacheManager.set(`${user.id}-${accessTokenID}`, accessToken, "EX", 14400);
 
     const refreshToken = services.jwtService.sign({
         fullName: user.fullName,
         tokenID: accessTokenID,
-        userID: user._id,
+        userID: user.id,
         mail: user.mail
     }, {
         secret: process.env.JWT_SECRET_KEY,
@@ -100,17 +95,15 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
     await services.r
         .db("nedu")
         .table("users")
-        .filter({
-            id: user.id
-        })
+        .get(user.id)
         .update({
-            refreshToken: refreshToken
+            refreshToken
         })
         .run();
 
     return {
-        accessToken: accessToken,
-        refreshToken: refreshToken
+        accessToken,
+        refreshToken
     };
 };
 

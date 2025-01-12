@@ -17,6 +17,9 @@ import {
     RegisterDTO
 } from "./dto/register.dto";
 import {
+    LogoutDTO
+} from "./dto/logout.dto";
+import {
     LoginDTO
 } from "./dto/login.dto";
 
@@ -47,4 +50,11 @@ export class AuthenticationController {
         return await this.authenticationService.refreshToken(args);
     }
 
+    @MessagePattern("logout")
+    async logout(args: LogoutDTO) {
+        const context = args.context;
+        delete args.context;
+
+        return await this.authenticationService.logout(args, context);
+    }
 }

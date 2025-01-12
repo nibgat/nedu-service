@@ -1,19 +1,37 @@
 import {
-    HttpStatus
-} from "@nestjs/common";
-import {
     ApiProperty
 } from "@nestjs/swagger";
 
-export class SuccessLoginResponsDTO {
+export class SuccessLoginResponseDTO {
     @ApiProperty({
-        type: "string"
+        type: "string",
+        format: "JWT Token"
     })
-    message: string
+    accessToken: string;
 
     @ApiProperty({
-        type: "number",
-        format: "HTTPStatus"
+        type: "string",
+        format: "JWT Token"
     })
-    code: HttpStatus
+    refreshTokens: string;
+
+    @ApiProperty({
+        type: "string",
+        example: "Sezai Öztürk"
+    })
+    fullName: string
+
+    @ApiProperty({
+        type: "string",
+        example: "5368505454",
+        format: "Phone Number ( Full number. )"
+    })
+    phone: string
+
+    @ApiProperty({
+        type: "string",
+        format: "E - Mail",
+        example: "sezaiozturk@nibgat.com"
+    })
+    mail: string
 }

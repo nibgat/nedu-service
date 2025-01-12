@@ -19,12 +19,19 @@ import {
     RegisterDTO
 } from "./dto/register.dto";
 import {
+    ContextDTO
+} from "./dto/context.dto";
+import {
+    LogoutDTO
+} from "./dto/logout.dto";
+import {
     LoginDTO
 } from "./dto/login.dto";
 import {
     validateToken,
     refreshToken,
     register,
+    logout,
     login
 } from "./actions";
 
@@ -67,5 +74,12 @@ export class AuthenticationService {
             jwtService: this.jwtService,
             r: this.r
         });
+    }
+
+    async logout(args: LogoutDTO, context: ContextDTO) {
+        return await logout(args, {
+            cacheManager: this.cacheManager,
+            r: this.r
+        }, context);
     }
 } { }

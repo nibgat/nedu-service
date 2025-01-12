@@ -14,6 +14,9 @@ import {
 import {
     LoginDTO
 } from "./dto/request/login.dto";
+import {
+    ContextDTO
+} from "./dto/request/context.dto";
 
 @Injectable()
 export class AuthenticationService {
@@ -37,6 +40,12 @@ export class AuthenticationService {
     async refreshToken(args: RefreshTokenDTO) {
         return this.authenticationService.send("refreshToken", {
             ...args
+        });
+    }
+
+    async logout(context: ContextDTO) {
+        return this.authenticationService.send("logout", {
+            context
         });
     }
 } { }

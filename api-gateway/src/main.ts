@@ -16,8 +16,8 @@ async function bootstrap() {
     );
 
     const options = new DocumentBuilder()
-        .setTitle("Nibgat | API Gateway")
-        .setDescription("Nibgat - Service")
+        .setTitle("Nedu | API Gateway")
+        .setDescription("Nedu - Service")
         .setVersion("1.0.0")
         .build();
     const document = SwaggerModule.createDocument(app, options);

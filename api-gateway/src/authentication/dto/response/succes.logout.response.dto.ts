@@ -5,7 +5,7 @@ import {
     ApiProperty
 } from "@nestjs/swagger";
 
-export class SuccessRegisterResponseDTO {
+export class SuccessLogoutResponseDTO {
     @ApiProperty({
         type: "string"
     })

@@ -20,21 +20,15 @@ const login = async (args: LoginDTO, services: {
     cacheManager: Redis;
     r: typeof rethinkdb;
 }) => {
-    const _user = await services.r
+    const user = await services.r
         .db("nedu")
         .table("users")
-        .filter(
-            services.r
-                .row('mail')
-                .eq(args.mail)
-                .and(
-                    services.r
-                        .row('password')
-                        .eq(args.password)
-                )
-        ).run();
-
-    const user = _user[0]
+        .filter({
+            mail: args.mail,
+            password: args.password
+        })
+        .nth(0)
+        .run();
 
     if (!user) {
         return {
@@ -59,35 +53,30 @@ const login = async (args: LoginDTO, services: {
     const refreshToken = services.jwtService.sign({
         fullName: user.fullName,
         tokenID: accessTokenID,
-        userID: user._id,
+        userID: user.id,
         mail: user.mail
     }, {
         secret: process.env.JWT_SECRET_KEY,
         expiresIn: "30d"
     });
 
-    let userRefreshToken = user.refreshToken ? user.refreshToken : refreshToken;
-
-    await services.cacheManager.set(`${user.id.toString()}-${accessTokenID}`, accessToken, "EX", 14400);
-
+    await services.cacheManager.set(`${user.id}-${accessTokenID}`, accessToken, "EX", 14400);
 
     await services.r
         .db("nedu")
         .table("users")
-        .filter({
-            id: user.id
-        })
+        .get(user.id)
         .update({
-            refreshToken: userRefreshToken
+            refreshToken
         })
         .run();
 
     return {
-        refreshToken: userRefreshToken,
+        accessToken,
+        refreshToken,
         fullName: user.fullName,
         phone: user.phone,
         mail: user.mail,
-        accessToken,
         id: user.id
     }
 };

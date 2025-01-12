@@ -34,7 +34,7 @@ const validateToken = async (args: ValidateTokenDTO, services: {
         };
     }
 
-    const cachedToken = await services.cacheManager.get(`${tokenDecode.userID.toString()}-${tokenDecode.tokenID}`);
+    const cachedToken = await services.cacheManager.get(`${tokenDecode.userID}-${tokenDecode.tokenID}`);
 
     if (!cachedToken) {
         return {

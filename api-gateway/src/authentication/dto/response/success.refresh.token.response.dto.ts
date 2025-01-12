@@ -13,5 +13,5 @@ export class SuccessRefreshTokenResponseDTO {
         type: "string",
         format: "JWT Token"
     })
-    refreshTokens: string[];
+    refreshToken: string;
 }

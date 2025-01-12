@@ -1,7 +1,10 @@
 import {
     Controller,
+    UseGuards,
     Body,
-    Post
+    Post,
+    Req,
+    Put
 } from "@nestjs/common";
 import {
     AuthenticationService
@@ -14,10 +17,13 @@ import {
     SuccessRefreshTokenResponseDTO
 } from "./dto/response/success.refresh.token.response.dto";
 import {
-    SuccessRegisterResponsDTO
+    SuccessRegisterResponseDTO
 } from "./dto/response/succes.register.response.dto";
 import {
-    SuccessLoginResponsDTO
+    SuccessLogoutResponseDTO
+} from "./dto/response/succes.logout.response.dto";
+import {
+    SuccessLoginResponseDTO
 } from "./dto/response/success.login.response.dto";
 import {
     RefreshTokenDTO
@@ -28,6 +34,9 @@ import {
 import {
     LoginDTO
 } from "./dto/request/login.dto";
+import {
+    AuthGuard
+} from "src/guards/auth.guard";
 
 @Controller("authentication")
 export class AuthenticationController {
@@ -37,7 +46,7 @@ export class AuthenticationController {
 
     @ApiTags("Authentication")
     @ApiOkResponse({
-        type: SuccessRegisterResponsDTO
+        type: SuccessRegisterResponseDTO
     })
     @Post("register")
     async register(@Body() body: RegisterDTO) {
@@ -46,7 +55,7 @@ export class AuthenticationController {
 
     @ApiTags("Authentication")
     @ApiOkResponse({
-        type: SuccessLoginResponsDTO
+        type: SuccessLoginResponseDTO
     })
     @Post("login")
     async login(@Body() body: LoginDTO) {
@@ -60,5 +69,17 @@ export class AuthenticationController {
     @Post("refreshToken")
     async refreshToken(@Body() body: RefreshTokenDTO) {
         return this.authenticationService.refreshToken(body);
+    }
+
+    @ApiTags("Authentication")
+    @ApiOkResponse({
+        type: SuccessLogoutResponseDTO
+    })
+    @UseGuards(AuthGuard)
+    @Put("logout")
+    async logout(@Req() req) {
+        return this.authenticationService.logout({
+            user: req.user
+        });
     }
 }
