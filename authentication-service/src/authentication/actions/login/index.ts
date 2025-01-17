@@ -28,6 +28,7 @@ const login = async (args: LoginDTO, services: {
             password: args.password
         })
         .nth(0)
+        .default(null)
         .run();
 
     if (!user) {
