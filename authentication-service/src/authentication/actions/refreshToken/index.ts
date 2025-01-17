@@ -29,6 +29,7 @@ const refreshToken = async (args: RefreshTokenDTO, services: {
             refreshToken: args.token
         })
         .nth(0)
+        .default(null)
         .run();
 
     if (!user) {
